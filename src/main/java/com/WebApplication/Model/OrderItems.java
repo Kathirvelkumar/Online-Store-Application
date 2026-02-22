@@ -2,8 +2,14 @@ package com.WebApplication.Model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class OrderItems {
     @Id
