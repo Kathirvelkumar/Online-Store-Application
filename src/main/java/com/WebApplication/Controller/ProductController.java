@@ -2,39 +2,36 @@ package com.WebApplication.Controller;
 
 import com.WebApplication.Model.Products;
 import com.WebApplication.Service.ProductServices;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class ProductController {
-    //    @Autowired
-//    ProductServices productServices;
-//
-//    public ProductController(ProductServices productServices) {
-//        this.productServices = productServices;
-//    }
-//
-//    @GetMapping("/products")
-//    public List<Products> getProducts() {
-//        return productServices.getProductsList();
-//    }
-//
-//    @GetMapping("/products/{productId}")
-//    public Products getProductById(@PathVariable int productId) {
-//        return productServices.getProductById(productId);
-//    }
-//
-//    @PostMapping("/products")
-//    public void addProduct(@RequestBody Products product) {
-//        productServices.addProduct(product);
-//    }
-//
-//    @PostMapping("/products/bulk")
-//    public void addProducts(@RequestBody List<Products> products){
-//        productServices.addAllProducts(products);
-//    }
+    ProductServices productServices;
+
+    public ProductController(ProductServices productServices) {
+        this.productServices = productServices;
+    }
+
+    @GetMapping("/api/products")
+    public List<Products> getProducts() {
+        return productServices.getProductsList();
+    }
+
+    @GetMapping("/api/products/{productId}")
+    public Products getProductById(@PathVariable Long productId) {
+        return productServices.getProductById(productId);
+    }
+
+    @PostMapping("/api/products")
+    public void addProduct(@RequestBody Products product) {
+        productServices.addProduct(product);
+    }
+
+    @PostMapping("/api/products/bulk")
+    public void addProducts(@RequestBody List<Products> products){
+        productServices.addAllProducts(products);
+    }
 //
 //    @PutMapping("/products/{productId}")
 //    public void updateProduct(@PathVariable int productId,
