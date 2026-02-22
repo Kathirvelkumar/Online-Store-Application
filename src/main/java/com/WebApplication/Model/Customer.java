@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Customer {
     @Id
-    private int customerId;
+    private Long customerId;
     private String customerName;
     private String customerEmail;
     private String password;
-    private long phoneNumber;
+    private String phoneNumber;
     private String customerAddress;
 
 }
