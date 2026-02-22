@@ -1,4 +1,5 @@
 package com.WebApplication.Model;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -9,13 +10,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Products {
-
+public class Customer {
     @Id
-    private int productId;
-    private String productName;
-    private  String description;
-    private int price;
-    private int stackQuantity;
+    private int customerId;
+    private String customerName;
+    private String customerEmail;
+    private String password;
+    private long phoneNumber;
+    private String customerAddress;
 
 }
