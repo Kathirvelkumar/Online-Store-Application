@@ -1,6 +1,6 @@
 package com.WebApplication.controller;
 
-import com.WebApplication.model.Products;
+import com.WebApplication.entity.Products;
 import com.WebApplication.service.ProductServices;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;

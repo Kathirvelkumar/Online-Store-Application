@@ -1,4 +1,4 @@
-package com.WebApplication.model;
+package com.WebApplication.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -12,10 +12,13 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class OrderItems {
+public class Products {
+
     @Id
-    private Long orderId;
-    private int quantity;
+    private Long productId;
+    private String productName;
+    private String description;
     private BigDecimal price;
+    private int stackQuantity;
 
 }

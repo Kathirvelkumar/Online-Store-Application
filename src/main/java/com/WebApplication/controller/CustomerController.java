@@ -1,10 +1,9 @@
 package com.WebApplication.controller;
 
-import com.WebApplication.model.Customers;
+import com.WebApplication.entity.Customers;
 import com.WebApplication.service.CustomerServices;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import java.util.*;
 
 @RestController                     // Marks this class as REST controller
 @RequestMapping("/api/customers")   // Base URL for all endpoints in this controller

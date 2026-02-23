@@ -1,6 +1,6 @@
 package com.WebApplication.service;
 
-import com.WebApplication.model.Customers;
+import com.WebApplication.entity.Customers;
 import com.WebApplication.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 import java.util.*;

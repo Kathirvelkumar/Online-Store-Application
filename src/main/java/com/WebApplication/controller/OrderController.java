@@ -1,6 +1,6 @@
 package com.WebApplication.controller;
 
-import com.WebApplication.model.Orders;
+import com.WebApplication.entity.Orders;
 import com.WebApplication.service.OrderServices;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;

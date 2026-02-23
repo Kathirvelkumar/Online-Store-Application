@@ -1,6 +1,6 @@
 package com.WebApplication.service;
 
-import com.WebApplication.model.Products;
+import com.WebApplication.entity.Products;
 import com.WebApplication.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 

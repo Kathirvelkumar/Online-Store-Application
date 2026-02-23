@@ -1,4 +1,4 @@
-package com.WebApplication.model;
+package com.WebApplication.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,5 +18,4 @@ public class Customers {
     private String password;
     private String phoneNumber;
     private String customerAddress;
-
 }

@@ -1,6 +1,6 @@
 package com.WebApplication.service;
 
-import com.WebApplication.model.Orders;
+import com.WebApplication.entity.Orders;
 import com.WebApplication.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
