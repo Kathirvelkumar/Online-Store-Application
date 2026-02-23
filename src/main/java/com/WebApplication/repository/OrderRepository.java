@@ -1,6 +1,6 @@
-package com.WebApplication.Repository;
+package com.WebApplication.repository;
 
-import com.WebApplication.Model.Orders;
+import com.WebApplication.model.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

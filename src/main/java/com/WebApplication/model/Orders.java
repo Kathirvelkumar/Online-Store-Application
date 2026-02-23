@@ -1,4 +1,4 @@
-package com.WebApplication.Model;
+package com.WebApplication.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

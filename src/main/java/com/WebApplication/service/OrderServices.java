@@ -1,27 +1,36 @@
-package com.WebApplication.Service;
+package com.WebApplication.service;
 
-import com.WebApplication.Model.Orders;
-
-import com.WebApplication.Repository.OrderRepository;
+import com.WebApplication.model.Orders;
+import com.WebApplication.repository.OrderRepository;
 import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 
-@Service
+@Service   // Marks this class as Service layer component
 public class OrderServices {
 
     private final OrderRepository orderRepository;
 
+    // Constructor-based Dependency Injection
     public OrderServices(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
+    /*
+     * Fetch all orders from database
+     * @return list of orders
+     */
     public List<Orders> getOrdersList() {
         return orderRepository.findAll();
     }
 
-    public Orders getOrderById(Long orderId){
+    /*
+     * Fetch order by ID
+     * If not found, returns a default NO_ORDER object (your current logic)
+     */
+    public Orders getOrderById(Long orderId) {
         return orderRepository.findById(orderId)
                 .orElse(new Orders(
                         0L,
@@ -31,12 +40,14 @@ public class OrderServices {
                 ));
     }
 
-    public void addOrder(Orders order) {
-        orderRepository.save(order);
+    //    Save a new order in database
+    public Orders addOrder(Orders order) {
+        return orderRepository.save(order);
     }
 
-    public void deleteOrder(Long orderId){
+    //  Delete order by ID
+
+    public void deleteOrder(Long orderId) {
         orderRepository.deleteById(orderId);
     }
-
 }
