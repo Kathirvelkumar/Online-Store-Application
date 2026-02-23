@@ -29,6 +29,7 @@ public class Orders {
         PLACED,
         SHIPPED,
         DELIVERED,
-        CANCELLED
+        CANCELLED,
+        NO_ORDER
     }
 }

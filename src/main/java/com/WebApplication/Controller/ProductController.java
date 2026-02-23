@@ -3,6 +3,7 @@ package com.WebApplication.Controller;
 import com.WebApplication.Model.Products;
 import com.WebApplication.Service.ProductServices;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.*;
 
 @RestController
@@ -29,7 +30,7 @@ public class ProductController {
     }
 
     @PostMapping("/api/products/bulk")
-    public void addProducts(@RequestBody List<Products> products){
+    public void addProducts(@RequestBody List<Products> products) {
         productServices.addAllProducts(products);
     }
 //

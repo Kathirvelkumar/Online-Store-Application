@@ -3,6 +3,7 @@ package com.WebApplication.Service;
 import com.WebApplication.Model.Products;
 import com.WebApplication.Repository.ProductRepository;
 import org.springframework.stereotype.Service;
+
 import java.math.*;
 import java.util.*;
 
@@ -32,7 +33,7 @@ public class ProductServices {
     }
 
     //    Add bulk amount of Products
-    public void addAllProducts(List<Products> products){
+    public void addAllProducts(List<Products> products) {
         productRepository.saveAll(products);
     }
 //

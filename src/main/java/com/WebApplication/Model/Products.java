@@ -1,4 +1,5 @@
 package com.WebApplication.Model;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ public class Products {
     @Id
     private Long productId;
     private String productName;
-    private  String description;
+    private String description;
     private BigDecimal price;
     private int stackQuantity;
 

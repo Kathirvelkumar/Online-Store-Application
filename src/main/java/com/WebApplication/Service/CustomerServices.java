@@ -14,13 +14,16 @@ public class CustomerServices {
     public CustomerServices(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
-//    Show the Entire Customer List
+
+    //    Show the Entire Customer List
     public List<Customers> findAllCustomers() {
+
         return customerRepository.findAll();
     }
 
-//    Add a new Customer
+    //    Add a new Customer
     public Customers addCustomer(Customers customer) {
+
         return customerRepository.save(customer);
     }
 }
