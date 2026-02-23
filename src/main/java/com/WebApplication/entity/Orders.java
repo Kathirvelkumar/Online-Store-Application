@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -17,13 +16,14 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
-
     private LocalDateTime orderDate;
-
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     private BigDecimal totalAmount;
+
+    public Orders(long l, LocalDateTime now, OrderStatus orderStatus, BigDecimal zero) {
+    }
 
     public enum OrderStatus {
         PLACED,
@@ -32,4 +32,8 @@ public class Orders {
         CANCELLED,
         NO_ORDER
     }
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customers customer;
 }

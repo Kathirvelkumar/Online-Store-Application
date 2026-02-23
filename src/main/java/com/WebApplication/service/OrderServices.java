@@ -1,35 +1,30 @@
 package com.WebApplication.service;
 
+import com.WebApplication.dto.TopCustomerDTO;
 import com.WebApplication.entity.Orders;
 import com.WebApplication.repository.OrderRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 
-@Service   // Marks this class as Service layer component
+@Service
 public class OrderServices {
 
     private final OrderRepository orderRepository;
 
-    // Constructor-based Dependency Injection
     public OrderServices(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
-    /*
-     * Fetch all orders from database
-     * @return list of orders
-     */
+    // Fetch all orders
     public List<Orders> getOrdersList() {
         return orderRepository.findAll();
     }
 
-    /*
-     * Fetch order by ID
-     * If not found, returns a default NO_ORDER object (your current logic)
-     */
+    // Fetch order by ID
     public Orders getOrderById(Long orderId) {
         return orderRepository.findById(orderId)
                 .orElse(new Orders(
@@ -40,14 +35,18 @@ public class OrderServices {
                 ));
     }
 
-    //    Save a new order in database
+    // Save new order
     public Orders addOrder(Orders order) {
         return orderRepository.save(order);
     }
 
-    //  Delete order by ID
-
+    // Delete order
     public void deleteOrder(Long orderId) {
         orderRepository.deleteById(orderId);
+    }
+
+    // Analytics API → Top 3 customers by purchase
+    public List<TopCustomerDTO> getTopCustomers() {
+        return orderRepository.findTopCustomers((Pageable) PageRequest.of(0, 3));
     }
 }
