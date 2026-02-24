@@ -1,4 +1,4 @@
 # Online-Store-Application
 
 **Requirements**
--- Customer registration -> http://localhost:8080/api/customers
+-- Customer registration -> http://localhost:8080/api/customers/register
