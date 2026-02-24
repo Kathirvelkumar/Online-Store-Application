@@ -1,8 +1,7 @@
 package com.WebApplication.controller;
 
-import com.WebApplication.dto.CustomerRequestDTO;
-import com.WebApplication.dto.CustomerResponseDTO;
-import com.WebApplication.entity.Customers;
+import com.WebApplication.dto.CustomerRequest;
+import com.WebApplication.dto.CustomerResponse;
 import com.WebApplication.service.CustomerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,16 +19,29 @@ public class CustomerController {
 
     // GET all customers
     @GetMapping
-    public List<Customers> getAllCustomers() {
+    ResponseEntity<List<CustomerResponse>> findAllCustomers(){
+        List<CustomerResponse> customerResponse = customerServices.findAllCustomers();
+        return ResponseEntity.status(200).body(customerResponse);
+    }
 
-        return customerServices.findAllCustomers();
+    @GetMapping("/{id}")
+    ResponseEntity<CustomerResponse> findCustomer(@PathVariable Long id){
+        CustomerResponse customerResponse = customerServices.findCustomer(id);
+        return ResponseEntity.status(200).body(customerResponse);
     }
 
     // POST add customer
     @PostMapping
-    ResponseEntity<CustomerResponseDTO> addCustomer(@RequestBody CustomerRequestDTO customerRequest) {
-        CustomerResponseDTO savedCustomer =
+    ResponseEntity<CustomerResponse> addCustomer(@RequestBody CustomerRequest customerRequest) {
+        CustomerResponse savedCustomer =
                 customerServices.addCustomer(customerRequest);
         return ResponseEntity.status(201).body(savedCustomer);
+    }
+
+    // POST Bulk Customer.
+    @PostMapping("/bulk")
+    ResponseEntity<List<CustomerResponse>> addMultipleCustomers(@RequestBody List<CustomerRequest> customerRequests){
+        List<CustomerResponse> customerResponses = customerServices.addMultipleCustomers(customerRequests);
+        return ResponseEntity.status(201).body(customerResponses);
     }
 }

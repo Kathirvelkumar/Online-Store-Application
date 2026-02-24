@@ -1,13 +1,17 @@
 package com.WebApplication.service;
 
-import com.WebApplication.dto.CustomerRequestDTO;
-import com.WebApplication.dto.CustomerResponseDTO;
-import com.WebApplication.entity.Customers;
+import com.WebApplication.dto.CustomerRequest;
+import com.WebApplication.dto.CustomerResponse;
+
 import java.util.List;
 
 public interface CustomerServices {
 
-    List<Customers> findAllCustomers();
+    List<CustomerResponse> findAllCustomers();
 
-    CustomerResponseDTO addCustomer(CustomerRequestDTO customerRequest);
+    CustomerResponse addCustomer(CustomerRequest customerRequest);
+
+    List<CustomerResponse> addMultipleCustomers(List<CustomerRequest> customerRequests);
+
+    CustomerResponse findCustomer(Long id);
 }
