@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class OrderServices implements com.WebApplication.service.OrderServices {
+public class OrderServicesImpl implements com.WebApplication.service.OrderServices {
 
     private final OrderRepository orderRepository;
 
-    public OrderServices(OrderRepository orderRepository) {
+    public OrderServicesImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 

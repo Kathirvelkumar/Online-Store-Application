@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class CustomerServices implements com.WebApplication.service.CustomerServices {
+public class CustomerServicesImpl implements com.WebApplication.service.CustomerServices {
 
     private final CustomerRepository customerRepository;
 
-    public CustomerServices(CustomerRepository customerRepository) {
+    public CustomerServicesImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 

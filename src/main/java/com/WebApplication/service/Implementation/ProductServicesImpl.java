@@ -8,11 +8,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class ProductServices implements com.WebApplication.service.ProductServices {
+public class ProductServicesImpl implements com.WebApplication.service.ProductServices {
 
     private final ProductRepository productRepository;
 
-    public ProductServices(ProductRepository productRepository) {
+    public ProductServicesImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
