@@ -2,6 +2,7 @@ package com.WebApplication.service.Implementation;
 
 import com.WebApplication.entity.Orders;
 import com.WebApplication.repository.OrderRepository;
+import com.WebApplication.service.OrderServices;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class OrderServicesImpl implements com.WebApplication.service.OrderServices {
+public class OrderServicesImpl implements OrderServices {
 
     private final OrderRepository orderRepository;
 

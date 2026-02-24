@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CustomerResponseDTO {
     private String customerName;
-    private String customerEmail;
-    private String password;
     private String phoneNumber;
     private String customerAddress;
 }

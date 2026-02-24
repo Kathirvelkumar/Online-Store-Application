@@ -2,18 +2,34 @@ package com.WebApplication.service.Implementation;
 
 import com.WebApplication.entity.Products;
 import com.WebApplication.repository.ProductRepository;
+import com.WebApplication.service.ProductServices;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class ProductServicesImpl implements com.WebApplication.service.ProductServices {
+@RequiredArgsConstructor
+public class ProductServicesImpl implements ProductServices {
 
+    @Autowired
     private final ProductRepository productRepository;
 
-    public ProductServicesImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    @Autowired
+    private final ModelMapper mapper;
+
+
+    @Override
+    public Products addProduct(Products product) {
+        return productRepository.save(product);
+    }
+
+    @Override
+    public List<Products> addAllProducts(List<Products> products) {
+        return productRepository.saveAll(products);
     }
 
     @Override
@@ -33,13 +49,4 @@ public class ProductServicesImpl implements com.WebApplication.service.ProductSe
                 ));
     }
 
-    @Override
-    public Products addProduct(Products product) {
-        return productRepository.save(product);
-    }
-
-    @Override
-    public List<Products> addAllProducts(List<Products> products) {
-        return productRepository.saveAll(products);
-    }
 }

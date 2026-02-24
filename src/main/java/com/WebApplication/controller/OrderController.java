@@ -2,6 +2,7 @@ package com.WebApplication.controller;
 
 import com.WebApplication.entity.Orders;
 import com.WebApplication.service.OrderServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
@@ -9,12 +10,8 @@ import java.util.*;
 @RequestMapping("/api/orders")
 public class OrderController {
 
-    private final OrderServices orderServices;
-
-    // Inject interface instead of implementation
-    public OrderController(OrderServices orderServices) {
-        this.orderServices = orderServices;
-    }
+    @Autowired
+    private OrderServices orderServices;
 
     // GET all orders
     @GetMapping

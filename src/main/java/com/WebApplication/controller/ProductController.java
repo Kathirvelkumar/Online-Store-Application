@@ -2,6 +2,7 @@ package com.WebApplication.controller;
 
 import com.WebApplication.entity.Products;
 import com.WebApplication.service.ProductServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
@@ -9,12 +10,8 @@ import java.util.*;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductServices productServices;
-
-    // Constructor Injection
-    public ProductController(ProductServices productServices) {
-        this.productServices = productServices;
-    }
+    @Autowired
+    private ProductServices productServices;
 
     // GET: Fetch all products
     @GetMapping
