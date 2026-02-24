@@ -47,8 +47,8 @@ public class CustomerServicesImpl implements CustomerServices {
     }
 
     @Override
-    public CustomerResponse findCustomer(Long id) {
-        Customers customer = customerRepository.findById(id).orElse(new Customers(0L, "Undefind", "Undefind", "Undefind", "Undefind", "Undefind"));
+    public CustomerResponse findCustomerById(Long id) {
+        Customers customer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
         CustomerResponse customerResponse = mapper.map(customer, CustomerResponse.class);
 
         return customerResponse;

@@ -13,5 +13,5 @@ public interface CustomerServices {
 
     List<CustomerResponse> addMultipleCustomers(List<CustomerRequest> customerRequests);
 
-    CustomerResponse findCustomer(Long id);
+    CustomerResponse findCustomerById(Long id);
 }

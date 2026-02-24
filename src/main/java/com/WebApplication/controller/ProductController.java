@@ -3,6 +3,7 @@ package com.WebApplication.controller;
 import com.WebApplication.entity.Products;
 import com.WebApplication.service.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
@@ -14,26 +15,35 @@ public class ProductController {
     private ProductServices productServices;
 
     // GET: Fetch all products
-    @GetMapping
-    public List<Products> getProducts() {
-        return productServices.getProductsList();
+    @GetMapping()
+    ResponseEntity<List<Products>> getProducts(){
+        List<Products> products = productServices.getProductsList();
+
+//      If Products is Empty
+        if(products.isEmpty()){
+            return ResponseEntity.noContent().build(); // 204
+        }
+        return ResponseEntity.status(200).body(products);
     }
 
     // GET: Fetch product by ID
     @GetMapping("/{productId}")
-    public Products getProductById(@PathVariable Long productId) {
-        return productServices.getProductById(productId);
+    ResponseEntity<Products> getProductById(@PathVariable Long productId){
+        Products product = productServices.getProductById(productId);
+        return ResponseEntity.status(200).body(product);
     }
 
     // POST: Add a single product
     @PostMapping
-    public Products addProduct(@RequestBody Products product) {
-        return productServices.addProduct(product);
+    ResponseEntity<Products> addProduct(@RequestBody Products product){
+        Products newproduct = productServices.addProduct(product);
+        return ResponseEntity.status(201).body(newproduct);
     }
 
     // POST: Add multiple products
     @PostMapping("/bulk")
-    public List<Products> addProducts(@RequestBody List<Products> products) {
-        return productServices.addAllProducts(products);
+    ResponseEntity<List<Products>> addAllProducts(@RequestBody List<Products> productsList){
+        List<Products> products = productServices.addAllProducts(productsList);
+        return ResponseEntity.status(201).body(products);
     }
 }

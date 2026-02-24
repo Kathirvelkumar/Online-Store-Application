@@ -16,7 +16,6 @@ public class CustomerController {
     @Autowired
     private CustomerServices customerServices;
 
-
     // GET all customers
     @GetMapping
     ResponseEntity<List<CustomerResponse>> findAllCustomers(){
@@ -25,13 +24,13 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<CustomerResponse> findCustomer(@PathVariable Long id){
-        CustomerResponse customerResponse = customerServices.findCustomer(id);
+    ResponseEntity<CustomerResponse> findCustomerById(@PathVariable Long id){
+        CustomerResponse customerResponse = customerServices.findCustomerById(id);
         return ResponseEntity.status(200).body(customerResponse);
     }
 
     // POST add customer
-    @PostMapping
+    @PostMapping("/register")
     ResponseEntity<CustomerResponse> addCustomer(@RequestBody CustomerRequest customerRequest) {
         CustomerResponse savedCustomer =
                 customerServices.addCustomer(customerRequest);
