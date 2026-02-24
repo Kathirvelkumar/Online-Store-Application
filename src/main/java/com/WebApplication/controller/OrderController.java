@@ -1,8 +1,7 @@
 package com.WebApplication.controller;
 
-import com.WebApplication.dto.TopCustomerDTO;
 import com.WebApplication.entity.Orders;
-import com.WebApplication.service.OrderServices;
+import com.WebApplication.service.Implementation.OrderServices;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
@@ -43,11 +42,6 @@ public class OrderController {
     @DeleteMapping("/{orderId}/cancel")
     public void deleteOrder(@PathVariable Long orderId){
         orderServices.deleteOrder(orderId);
-    }
-
-    @GetMapping("/analytics/top-customers")
-    public List<TopCustomerDTO> getTopCustomers() {
-        return orderServices.getTopCustomers();
     }
 
 }

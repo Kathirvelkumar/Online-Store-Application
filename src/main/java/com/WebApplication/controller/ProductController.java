@@ -1,7 +1,7 @@
 package com.WebApplication.controller;
 
 import com.WebApplication.entity.Products;
-import com.WebApplication.service.ProductServices;
+import com.WebApplication.service.Implementation.ProductServices;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
@@ -44,17 +44,3 @@ public class ProductController {
         return productServices.addAllProducts(products);
     }
 }
-
-
-//
-//    @PutMapping("/products/{productId}")
-//    public void updateProduct(@PathVariable int productId,
-//                              @RequestBody Products product) {
-//        product.setProductId(productId);
-//        productServices.updateProduct(product);
-//    }
-//
-//    @DeleteMapping("/products/{productId}")
-//    public void deleteProduct(@PathVariable int productId) {
-//        productServices.deleteProduct(productId);
-//    }
