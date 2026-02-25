@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface OrderServices {
 
-    List<Orders> getOrdersList();
+    List<OrderResponse> getOrdersList();
 
     OrderResponse getOrderById(Long orderId);
 
@@ -16,4 +16,6 @@ public interface OrderServices {
     void deleteOrder(Long orderId);
 
     OrderResponse placeOrder(OrderRequest request);
+
+    OrderResponse cancelOrderById(Long orderId);
 }

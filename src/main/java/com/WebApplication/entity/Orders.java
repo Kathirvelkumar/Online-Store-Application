@@ -25,7 +25,6 @@ public class Orders {
 
     private BigDecimal totalAmount;
 
-
     public enum OrderStatus {
         PENDING,
         PLACED,

@@ -4,6 +4,7 @@ import com.WebApplication.dto.OrderRequest;
 import com.WebApplication.dto.OrderResponse;
 import com.WebApplication.entity.Orders;
 import com.WebApplication.service.OrderServices;
+import jdk.javadoc.doclet.Reporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class OrderController {
 
     // GET all orders
     @GetMapping
-    public List<Orders> getOrdersList() {
+    public List<OrderResponse> getOrdersList() {
         return orderServices.getOrdersList();
     }
 
@@ -31,7 +32,7 @@ public class OrderController {
 //    }
 
     @GetMapping("/{orderId}")
-    ResponseEntity<OrderResponse> getgetOrderById(@PathVariable Long orderId){
+    ResponseEntity<OrderResponse> getOrderById(@PathVariable Long orderId){
         OrderResponse orderResponse = orderServices.getOrderById(orderId);
         return ResponseEntity.status(200).body(orderResponse);
     }
@@ -55,6 +56,12 @@ public class OrderController {
         OrderResponse order = orderServices.placeOrder(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(order);
+    }
+
+    @PutMapping("{orderId}/cancel")
+    ResponseEntity<OrderResponse> cancelOrderById(@PathVariable Long orderId){
+        OrderResponse orderResponse = orderServices.cancelOrderById(orderId);
+        return ResponseEntity.ok(orderResponse);
     }
 
 }

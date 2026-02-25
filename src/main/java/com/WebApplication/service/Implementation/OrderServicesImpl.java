@@ -13,6 +13,8 @@ import com.WebApplication.repository.ProductRepository;
 import com.WebApplication.service.OrderServices;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.Order;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderServicesImpl implements OrderServices {
 
     @Autowired
@@ -33,8 +36,11 @@ public class OrderServicesImpl implements OrderServices {
     private final ProductRepository productRepository;
 
     @Override
-    public List<Orders> getOrdersList() {
-        return orderRepository.findAll();
+    public List<OrderResponse> getOrdersList() {
+        List<Orders> orders = orderRepository.findAll();
+        List<OrderResponse> orderResponses = orders.stream().map(order -> mapper.map(order,OrderResponse.class)).toList();
+
+        return orderResponses;
     }
 
     @Override
@@ -122,7 +128,7 @@ public class OrderServicesImpl implements OrderServices {
                 .stream()
                 .map(item -> {
                     OrderItemResponse dto = new OrderItemResponse();
-                    dto.setOrderItemId(item.getOrderItemsId());
+                    dto.setOrderItemsId(item.getOrderItemsId());
                     dto.setProductName(item.getProduct().getProductName());
                     dto.setPrice(item.getPrice());
                     dto.setQuantity(item.getQuantity());
@@ -134,4 +140,39 @@ public class OrderServicesImpl implements OrderServices {
 
         return response;
     }
+
+
+    @Transactional
+    public OrderResponse cancelOrderById(Long orderId){
+
+//      Check Order present in DB
+        Orders order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order doesn't exist"));
+
+        if(order.getStatus() == Orders.OrderStatus.DELIVERED){
+            throw new RuntimeException("Order Already Delivered");
+        }
+
+        order.setStatus(Orders.OrderStatus.CANCELLED);
+
+//        List<OrderItems> orderItems = order.getItems();
+//        for(OrderItems singleItem : orderItems){
+//            int var = singleItem.getQuantity();
+//            int var2 =singleItem.getProduct().getStackQuantity();
+//            singleItem.getProduct().setStackQuantity(var + var2);
+//            productRepository.save(singleItem.getProduct());
+//        }
+
+        for(OrderItems item : order.getItems()){
+            Products product = item.getProduct();
+            product.setStackQuantity(product.getStackQuantity() + item.getQuantity());
+            productRepository.save(product);
+        }
+
+        Orders updatedOrder = orderRepository.save(order);
+
+        return mapper.map(updatedOrder, OrderResponse.class);
+
+    }
+
+
 }

@@ -19,7 +19,7 @@ public class OrderItems {
     private BigDecimal price;
 
 //  FK -> from the Product_Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Products product;
 
