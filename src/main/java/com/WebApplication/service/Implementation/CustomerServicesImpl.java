@@ -23,8 +23,7 @@ public class CustomerServicesImpl implements CustomerServices {
     @Override
     public List<CustomerResponse> findAllCustomers() {
         List<Customers> customers = customerRepository.findAll();
-        List<CustomerResponse> customerResponse = customers.stream().map(customer -> mapper.map(customer, CustomerResponse.class)).toList();
-        return customerResponse;
+        return customers.stream().map(customer -> mapper.map(customer, CustomerResponse.class)).toList();
     }
 
     @Override
@@ -49,9 +48,8 @@ public class CustomerServicesImpl implements CustomerServices {
     @Override
     public CustomerResponse findCustomerById(Long id) {
         Customers customer = customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
-        CustomerResponse customerResponse = mapper.map(customer, CustomerResponse.class);
+        return mapper.map(customer, CustomerResponse.class);
 
-        return customerResponse;
     }
 
 

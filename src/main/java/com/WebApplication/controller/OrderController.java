@@ -25,9 +25,15 @@ public class OrderController {
     }
 
     // GET order by ID
+//    @GetMapping("/{orderId}")
+//    public Orders getOrderById(@PathVariable Long orderId) {
+//        return orderServices.getOrderById(orderId);
+//    }
+
     @GetMapping("/{orderId}")
-    public Orders getOrderById(@PathVariable Long orderId) {
-        return orderServices.getOrderById(orderId);
+    ResponseEntity<OrderResponse> getgetOrderById(@PathVariable Long orderId){
+        OrderResponse orderResponse = orderServices.getOrderById(orderId);
+        return ResponseEntity.status(200).body(orderResponse);
     }
 
     // POST new order

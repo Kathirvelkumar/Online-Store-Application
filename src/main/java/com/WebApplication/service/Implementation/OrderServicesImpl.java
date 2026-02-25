@@ -13,6 +13,8 @@ import com.WebApplication.repository.ProductRepository;
 import com.WebApplication.service.OrderServices;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,6 +24,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class OrderServicesImpl implements OrderServices {
+
+    @Autowired
+    private ModelMapper mapper;
 
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
@@ -33,9 +38,9 @@ public class OrderServicesImpl implements OrderServices {
     }
 
     @Override
-    public Orders getOrderById(Long orderId) {
-        return orderRepository.findById(orderId)
-                .orElseThrow(()-> new RuntimeException());
+    public OrderResponse getOrderById(Long orderId) {
+        Orders order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order Id doesn't exist"));
+        return mapper.map(order, OrderResponse.class);
     }
 
     @Override
@@ -52,7 +57,7 @@ public class OrderServicesImpl implements OrderServices {
     @Transactional
     public OrderResponse placeOrder(OrderRequest request) {
 
-        // 1️⃣ Check Customer exists
+        // Check Customer present in DB
         Customers customer = customerRepository.findById(request.getCustomerId())
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
@@ -64,27 +69,26 @@ public class OrderServicesImpl implements OrderServices {
         List<OrderItems> orderItems = new ArrayList<>();
         BigDecimal total = BigDecimal.ZERO;
 
-        // 2️⃣ Loop through items
         for (OrderRequest.ItemRequest itemReq : request.getItems()) {
 
             if (itemReq.getQuantity() <= 0) {
                 throw new RuntimeException("Quantity must be > 0");
             }
 
-            // 3️⃣ Check product exists
+            // Check product present in DB
             Products product = productRepository.findById(itemReq.getProductId())
                     .orElseThrow(() -> new RuntimeException("Product not found"));
 
-            // 4️⃣ Check stock available
+            //  Check stock present or not
             if (product.getStackQuantity() < itemReq.getQuantity()) {
                 throw new RuntimeException("Not enough stock for " + product.getProductName());
             }
 
-            // 5️⃣ Reduce stock
+            //  Reduce stock after selecting the order stock
             product.setStackQuantity(product.getStackQuantity() - itemReq.getQuantity());
             productRepository.save(product);
 
-            // 6️⃣ Create OrderItem
+            //  Create OrderItem
             OrderItems orderItem = new OrderItems();
             orderItem.setOrder(order);
             orderItem.setProduct(product);
@@ -93,7 +97,7 @@ public class OrderServicesImpl implements OrderServices {
 
             orderItems.add(orderItem);
 
-            // 7️⃣ Calculate total
+            // Calculate total
             total = total.add(
                     product.getPrice().multiply(BigDecimal.valueOf(itemReq.getQuantity()))
             );
@@ -102,10 +106,10 @@ public class OrderServicesImpl implements OrderServices {
         order.setItems(orderItems);
         order.setTotalAmount(total);
 
-        // 🔹 Save order first
+        // Save order first
         Orders savedOrder = orderRepository.save(order);
 
-        // 🔹 Convert to OrderResponse DTO
+        // Convert to OrderResponse DTO
         OrderResponse response = new OrderResponse();
         response.setOrderId(savedOrder.getOrderId());
         response.setCustomerName(savedOrder.getCustomer().getCustomerName());
@@ -113,7 +117,7 @@ public class OrderServicesImpl implements OrderServices {
         response.setTotalAmount(savedOrder.getTotalAmount());
         response.setOrderDate(savedOrder.getOrderDate());
 
-        // 🔹 Map OrderItems → DTO list
+        // Map OrderItems → DTO list
         List<OrderItemResponse> itemResponses = savedOrder.getItems()
                 .stream()
                 .map(item -> {
