@@ -41,6 +41,11 @@ POST -> http://localhost:8080/api/orders/placeOrder
 }
 ```
 
+### 4. Cancel the Order Based on **"Order_id"**
+PUT -> http://localhost:8080/api/orders/{order_id}/cancel
+
+Change the Order status to **"CANCELLED"**, then re-stock the quantity to the Product Entity.
+
 ### 5. Get Order Details
 GET -> http://localhost:8080/api/orders/{order_id}
 
