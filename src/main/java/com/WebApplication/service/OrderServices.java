@@ -1,5 +1,6 @@
 package com.WebApplication.service;
 
+import com.WebApplication.dto.CustomerResponse;
 import com.WebApplication.dto.OrderRequest;
 import com.WebApplication.dto.OrderResponse;
 import com.WebApplication.entity.Orders;
@@ -18,4 +19,6 @@ public interface OrderServices {
     OrderResponse placeOrder(OrderRequest request);
 
     OrderResponse cancelOrderById(Long orderId);
+
+    List<CustomerResponse> getTop3Customers();
 }

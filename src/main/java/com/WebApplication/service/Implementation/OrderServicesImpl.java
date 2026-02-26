@@ -1,5 +1,6 @@
 package com.WebApplication.service.Implementation;
 
+import com.WebApplication.dto.CustomerResponse;
 import com.WebApplication.dto.OrderItemResponse;
 import com.WebApplication.dto.OrderRequest;
 import com.WebApplication.dto.OrderResponse;
@@ -18,9 +19,11 @@ import org.hibernate.query.Order;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -38,7 +41,7 @@ public class OrderServicesImpl implements OrderServices {
     @Override
     public List<OrderResponse> getOrdersList() {
         List<Orders> orders = orderRepository.findAll();
-        List<OrderResponse> orderResponses = orders.stream().map(order -> mapper.map(order,OrderResponse.class)).toList();
+        List<OrderResponse> orderResponses = orders.stream().map(order -> mapper.map(order, OrderResponse.class)).toList();
 
         return orderResponses;
     }
@@ -143,36 +146,34 @@ public class OrderServicesImpl implements OrderServices {
 
 
     @Transactional
-    public OrderResponse cancelOrderById(Long orderId){
-
+    public OrderResponse cancelOrderById(Long orderId) {
 //      Check Order present in DB
         Orders order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order doesn't exist"));
 
-        if(order.getStatus() == Orders.OrderStatus.DELIVERED){
+        if (order.getStatus() == Orders.OrderStatus.DELIVERED) {
             throw new RuntimeException("Order Already Delivered");
         }
 
         order.setStatus(Orders.OrderStatus.CANCELLED);
-
-//        List<OrderItems> orderItems = order.getItems();
-//        for(OrderItems singleItem : orderItems){
-//            int var = singleItem.getQuantity();
-//            int var2 =singleItem.getProduct().getStackQuantity();
-//            singleItem.getProduct().setStackQuantity(var + var2);
-//            productRepository.save(singleItem.getProduct());
-//        }
-
-        for(OrderItems item : order.getItems()){
+        for (OrderItems item : order.getItems()) {
             Products product = item.getProduct();
             product.setStackQuantity(product.getStackQuantity() + item.getQuantity());
             productRepository.save(product);
         }
-
         Orders updatedOrder = orderRepository.save(order);
 
         return mapper.map(updatedOrder, OrderResponse.class);
 
     }
 
+    @Override
+    public List<CustomerResponse> getTop3Customers() {
+        List<Orders> orders = orderRepository.findAll();
 
+        List<Customers> top3 = orders.stream()
+                .sorted(Comparator.comparing(Orders::getTotalAmount).reversed()).limit(3)
+                .map(Orders::getCustomer).toList();
+
+        return top3.stream().map(m -> mapper.map(m,CustomerResponse.class)).toList();
+    }
 }

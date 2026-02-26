@@ -1,10 +1,9 @@
 package com.WebApplication.controller;
 
+import com.WebApplication.dto.CustomerResponse;
 import com.WebApplication.dto.OrderRequest;
 import com.WebApplication.dto.OrderResponse;
-import com.WebApplication.entity.Orders;
 import com.WebApplication.service.OrderServices;
-import jdk.javadoc.doclet.Reporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,23 +24,11 @@ public class OrderController {
         return orderServices.getOrdersList();
     }
 
-    // GET order by ID
-//    @GetMapping("/{orderId}")
-//    public Orders getOrderById(@PathVariable Long orderId) {
-//        return orderServices.getOrderById(orderId);
-//    }
-
     @GetMapping("/{orderId}")
     ResponseEntity<OrderResponse> getOrderById(@PathVariable Long orderId){
         OrderResponse orderResponse = orderServices.getOrderById(orderId);
         return ResponseEntity.status(200).body(orderResponse);
     }
-
-    // POST new order
-//    @PostMapping
-//    public Orders addOrder(@RequestBody Orders order) {
-//        return orderServices.addOrder(order);
-//    }
 
     // DELETE order
     @DeleteMapping("/{orderId}/cancel")
@@ -49,7 +36,7 @@ public class OrderController {
         orderServices.deleteOrder(orderId);
     }
 
-
+//  Create order
     @PostMapping("/placeOrder")
     ResponseEntity<OrderResponse> placeOrder(@RequestBody OrderRequest request) {
 
@@ -58,10 +45,18 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
-    @PutMapping("{orderId}/cancel")
+//  Cancel the Order used by OrderId
+    @PutMapping("/{orderId}/cancel")
     ResponseEntity<OrderResponse> cancelOrderById(@PathVariable Long orderId){
         OrderResponse orderResponse = orderServices.cancelOrderById(orderId);
         return ResponseEntity.ok(orderResponse);
+    }
+
+//  Get TOP 3 customers based on the purchase price
+    @GetMapping("/analytics/top-customers")
+    ResponseEntity<List<CustomerResponse>> getTop3Customers(){
+        List<CustomerResponse> customerResponse = orderServices.getTop3Customers();
+        return ResponseEntity.ok(customerResponse);
     }
 
 }
