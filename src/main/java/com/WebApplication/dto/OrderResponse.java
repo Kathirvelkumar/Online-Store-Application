@@ -28,5 +28,6 @@ public class OrderResponse {
 
     @Column(name = "Placed Date")
     private LocalDateTime orderDate;
+
     private List<OrderItemResponse> items;
 }

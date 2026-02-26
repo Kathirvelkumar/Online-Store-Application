@@ -1,5 +1,6 @@
 package com.WebApplication.entity;
 
+import com.WebApplication.dto.ProductResponse;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -44,4 +45,5 @@ public class Products {
         FURNITURE,
         CLOTHING
     }
+
 }

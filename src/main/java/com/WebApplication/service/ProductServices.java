@@ -1,5 +1,6 @@
 package com.WebApplication.service;
 
+import com.WebApplication.dto.ProductResponse;
 import com.WebApplication.entity.Products;
 import java.util.List;
 
@@ -12,4 +13,8 @@ public interface ProductServices {
     Products addProduct(Products product);
 
     List<Products> addAllProducts(List<Products> products);
+
+    List<ProductResponse> getCategoryProducts();
+
+    ProductResponse getProductsByCategory(Products.ProductCategory category);
 }
