@@ -3,7 +3,6 @@ package com.WebApplication.service;
 import com.WebApplication.dto.CustomerResponse;
 import com.WebApplication.dto.OrderRequest;
 import com.WebApplication.dto.OrderResponse;
-import com.WebApplication.entity.Orders;
 import java.util.List;
 
 public interface OrderServices {
