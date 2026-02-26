@@ -15,7 +15,6 @@ import com.WebApplication.service.OrderServices;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.Order;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,20 +40,13 @@ public class OrderServicesImpl implements OrderServices {
     @Override
     public List<OrderResponse> getOrdersList() {
         List<Orders> orders = orderRepository.findAll();
-        List<OrderResponse> orderResponses = orders.stream().map(order -> mapper.map(order, OrderResponse.class)).toList();
-
-        return orderResponses;
+        return orders.stream().map(order -> mapper.map(order, OrderResponse.class)).toList();
     }
 
     @Override
     public OrderResponse getOrderById(Long orderId) {
         Orders order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order Id doesn't exist"));
         return mapper.map(order, OrderResponse.class);
-    }
-
-    @Override
-    public Orders addOrder(Orders order) {
-        return orderRepository.save(order);
     }
 
     @Override

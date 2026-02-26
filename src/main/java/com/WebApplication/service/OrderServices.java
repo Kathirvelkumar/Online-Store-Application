@@ -12,8 +12,6 @@ public interface OrderServices {
 
     OrderResponse getOrderById(Long orderId);
 
-    Orders addOrder(Orders order);
-
     void deleteOrder(Long orderId);
 
     OrderResponse placeOrder(OrderRequest request);
