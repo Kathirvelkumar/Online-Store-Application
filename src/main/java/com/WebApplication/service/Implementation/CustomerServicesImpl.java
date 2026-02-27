@@ -2,8 +2,10 @@ package com.WebApplication.service.Implementation;
 
 import com.WebApplication.dto.CustomerRequest;
 import com.WebApplication.dto.CustomerResponse;
+import com.WebApplication.dto.OrderResponse;
 import com.WebApplication.entity.Customers;
 import com.WebApplication.repository.CustomerRepository;
+import com.WebApplication.repository.OrderRepository;
 import com.WebApplication.service.CustomerServices;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class CustomerServicesImpl implements CustomerServices {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Autowired
     private ModelMapper mapper;

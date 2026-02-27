@@ -18,4 +18,6 @@ public interface OrderServices {
     OrderResponse cancelOrderById(Long orderId);
 
     List<CustomerResponse> getTop3Customers();
+
+    List<CustomerResponse> getMoreThenNorder(long orderNumbers);
 }

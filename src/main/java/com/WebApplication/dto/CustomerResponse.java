@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerResponse {
-    @Column(name = "Customer Name")
     private String customerName;
 
-    @Column(name = "Customer Address")
     private String customerAddress;
 }

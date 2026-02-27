@@ -24,6 +24,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -166,6 +168,34 @@ public class OrderServicesImpl implements OrderServices {
                 .sorted(Comparator.comparing(Orders::getTotalAmount).reversed()).limit(3)
                 .map(Orders::getCustomer).toList();
 
-        return top3.stream().map(m -> mapper.map(m,CustomerResponse.class)).toList();
+        return top3.stream().map(m -> mapper.map(m, CustomerResponse.class)).toList();
+    }
+
+//  More than N Orders
+    @Override
+    public List<CustomerResponse> getMoreThenNorder(long orderNumbers) {
+        List<Orders> orders = orderRepository.findAll();
+        List<CustomerResponse> customerResponses = new ArrayList<>();
+
+        Map<Customers, List<Orders>> map = orders.stream()
+                .collect(Collectors.groupingBy(Orders::getCustomer));
+
+        for (Map.Entry<Customers, List<Orders>> entrySet : map.entrySet()) {
+            Customers customer = entrySet.getKey();
+            List<Orders> order = entrySet.getValue();
+
+            if (order.size() > orderNumbers)
+                customerResponses.add(mapper.map(customer, CustomerResponse.class));
+        }
+
+        return customerResponses;
+
+
+//        return orderRepository.findAll().stream()
+//                .collect(Collectors.groupingBy(Orders::getCustomer))
+//                .entrySet().stream()
+//                .filter(entry -> entry.getValue().size() > orderNumbers)
+//                .map(entry -> mapper.map(entry.getKey(), CustomerResponse.class))
+//                .toList();
     }
 }

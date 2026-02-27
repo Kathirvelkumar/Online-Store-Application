@@ -5,6 +5,7 @@ import lombok.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -44,4 +45,5 @@ public class Customers {
         INACTIVE,
         BLOCKED
     }
+
 }

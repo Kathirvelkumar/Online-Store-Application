@@ -3,6 +3,7 @@ package com.WebApplication.controller;
 import com.WebApplication.dto.CustomerRequest;
 import com.WebApplication.dto.CustomerResponse;
 import com.WebApplication.service.CustomerServices;
+import com.WebApplication.service.OrderServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerServices customerServices;
+
+    @Autowired
+    private OrderServices orderServices;
 
     // GET all customers
     @GetMapping
@@ -42,5 +46,12 @@ public class CustomerController {
     ResponseEntity<List<CustomerResponse>> addMultipleCustomers(@RequestBody List<CustomerRequest> customerRequests){
         List<CustomerResponse> customerResponses = customerServices.addMultipleCustomers(customerRequests);
         return ResponseEntity.status(201).body(customerResponses);
+    }
+
+    @GetMapping("/frequency")
+    public ResponseEntity<List<CustomerResponse>> getCustomersByFrequency(
+            @RequestParam long minOrders){
+
+        return ResponseEntity.ok(orderServices.getMoreThenNorder(minOrders));
     }
 }
