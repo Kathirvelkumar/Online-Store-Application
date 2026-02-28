@@ -14,11 +14,9 @@ import com.WebApplication.repository.ProductRepository;
 import com.WebApplication.service.OrderServices;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,7 +27,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class OrderServicesImpl implements OrderServices {
 
     @Autowired
@@ -217,5 +214,15 @@ public class OrderServicesImpl implements OrderServices {
                         entry -> mapper.map(entry.getKey(), CustomerResponse.class),
                         Map.Entry::getValue
                 ));
+    }
+
+    @Override
+    public List<OrderResponse> getTop5Orders(){
+
+        return orderRepository.findAll().stream()
+                .sorted(Comparator.comparing(Orders::getTotalAmount).reversed())
+                .limit(5)
+                .map(o -> mapper.map(o, OrderResponse.class)).toList();
+
     }
 }

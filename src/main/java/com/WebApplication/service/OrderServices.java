@@ -24,4 +24,6 @@ public interface OrderServices {
     List<CustomerResponse> getMoreThenNorder(long orderNumbers);
 
     Map<CustomerResponse, BigDecimal> totalRevenuePerCustomer();
+
+    List<OrderResponse> getTop5Orders();
 }

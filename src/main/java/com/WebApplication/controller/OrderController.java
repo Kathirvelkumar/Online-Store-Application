@@ -59,4 +59,10 @@ public class OrderController {
         return ResponseEntity.ok(customerResponse);
     }
 
+    @GetMapping("/top5Orders")
+    ResponseEntity<List<OrderResponse>> getTop5Orders(){
+        List<OrderResponse> orderResponses = orderServices.getTop5Orders();
+        return ResponseEntity.ok(orderResponses);
+    }
+
 }
