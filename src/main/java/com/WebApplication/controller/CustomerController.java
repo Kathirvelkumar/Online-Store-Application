@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @RestController
@@ -49,9 +50,14 @@ public class CustomerController {
     }
 
     @GetMapping("/frequency")
-    public ResponseEntity<List<CustomerResponse>> getCustomersByFrequency(
+    ResponseEntity<List<CustomerResponse>> getCustomersByFrequency(
             @RequestParam long minOrders){
 
         return ResponseEntity.ok(orderServices.getMoreThenNorder(minOrders));
+    }
+
+    @GetMapping("/TotalRevenue")
+    ResponseEntity<Map<CustomerResponse, BigDecimal>> totalRevenuePerCustomer(){
+        return ResponseEntity.ok(orderServices.totalRevenuePerCustomer());
     }
 }

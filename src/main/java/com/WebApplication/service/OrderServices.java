@@ -3,7 +3,9 @@ package com.WebApplication.service;
 import com.WebApplication.dto.CustomerResponse;
 import com.WebApplication.dto.OrderRequest;
 import com.WebApplication.dto.OrderResponse;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface OrderServices {
 
@@ -20,4 +22,6 @@ public interface OrderServices {
     List<CustomerResponse> getTop3Customers();
 
     List<CustomerResponse> getMoreThenNorder(long orderNumbers);
+
+    Map<CustomerResponse, BigDecimal> totalRevenuePerCustomer();
 }

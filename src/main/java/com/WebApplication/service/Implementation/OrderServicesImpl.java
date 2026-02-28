@@ -15,6 +15,7 @@ import com.WebApplication.service.OrderServices;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.Order;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -171,7 +172,7 @@ public class OrderServicesImpl implements OrderServices {
         return top3.stream().map(m -> mapper.map(m, CustomerResponse.class)).toList();
     }
 
-//  More than N Orders
+    //  More than N Orders
     @Override
     public List<CustomerResponse> getMoreThenNorder(long orderNumbers) {
         List<Orders> orders = orderRepository.findAll();
@@ -197,5 +198,25 @@ public class OrderServicesImpl implements OrderServices {
 //                .filter(entry -> entry.getValue().size() > orderNumbers)
 //                .map(entry -> mapper.map(entry.getKey(), CustomerResponse.class))
 //                .toList();
+    }
+
+    @Override
+    public Map<CustomerResponse, BigDecimal> totalRevenuePerCustomer() {
+
+        return orderRepository.findAll()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        Orders::getCustomer,
+                        Collectors.reducing(
+                                BigDecimal.ZERO,
+                                Orders::getTotalAmount,
+                                BigDecimal::add
+                        )
+                ))
+                .entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> mapper.map(entry.getKey(), CustomerResponse.class),
+                        Map.Entry::getValue
+                ));
     }
 }
