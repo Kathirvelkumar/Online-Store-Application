@@ -38,8 +38,7 @@ public class OrderServicesImpl implements OrderServices {
 
     @Override
     public List<OrderResponse> getOrdersList() {
-        List<Orders> orders = orderRepository.findAll();
-        return orders.stream().map(order -> mapper.map(order, OrderResponse.class)).toList();
+        return orderRepository.findAll().stream().map(order -> mapper.map(order, OrderResponse.class)).toList();
     }
 
     @Override
@@ -53,10 +52,8 @@ public class OrderServicesImpl implements OrderServices {
         orderRepository.deleteById(orderId);
     }
 
-
     @Transactional
     public OrderResponse placeOrder(OrderRequest request) {
-
         // Check Customer present in DB
         Customers customer = customerRepository.findById(request.getCustomerId())
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
