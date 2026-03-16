@@ -1,12 +1,14 @@
 package com.WebApplication.controller;
 
 import com.WebApplication.dto.ProductResponse;
+import com.WebApplication.dto.ProductResponse2;
 import com.WebApplication.entity.Products;
 import com.WebApplication.service.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @RestController
@@ -60,4 +62,34 @@ public class ProductController {
         ProductResponse productResponse = productServices.getProductsByCategory(categoryName);
         return ResponseEntity.ok(productResponse);
     }
+    @DeleteMapping("/delete/{productId}")
+    ResponseEntity<ProductResponse2> deleteProductById(@PathVariable Long productId) {
+        ProductResponse2 productResponse = productServices.deleteProductById(productId);
+        return ResponseEntity.ok(productResponse);
+    }
+
+    @GetMapping("/sortedByName")
+    ResponseEntity<List<ProductResponse2>> getSortedProductsByName(){
+        List<ProductResponse2> productResponses = productServices.getSortedProductsByName();
+        return ResponseEntity.ok(productResponses);
+    }
+
+    @GetMapping("/sortedByPrice")
+    ResponseEntity<List<ProductResponse2>> getSortedProductsByPrice(){
+        List<ProductResponse2> productResponses = productServices.getSortedProductsByPrice();
+        return ResponseEntity.ok(productResponses);
+    }
+
+    @PostMapping("/filter/Greater")
+    ResponseEntity<List<ProductResponse2>> filterGreater(@RequestParam BigDecimal price){
+        List<ProductResponse2> productResponse = productServices.filterGreater(price);
+        return ResponseEntity.ok(productResponse);
+    }
+
+    @PostMapping("/filter/Smaller")
+    ResponseEntity<List<ProductResponse2>> filterSmaller(@RequestParam BigDecimal price){
+        List<ProductResponse2> productResponse = productServices.filterSmaller(price);
+        return ResponseEntity.ok(productResponse);
+    }
+
 }

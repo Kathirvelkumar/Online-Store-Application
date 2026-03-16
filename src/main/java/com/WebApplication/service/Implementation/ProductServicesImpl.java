@@ -1,17 +1,17 @@
 package com.WebApplication.service.Implementation;
 
 import com.WebApplication.dto.ProductResponse;
+import com.WebApplication.dto.ProductResponse2;
 import com.WebApplication.entity.Products;
 import com.WebApplication.repository.ProductRepository;
 import com.WebApplication.service.ProductServices;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -21,6 +21,9 @@ public class ProductServicesImpl implements ProductServices {
 
     @Autowired
     private final ProductRepository productRepository;
+
+    @Autowired
+    private ModelMapper mapper;
 
     @Override
     public Products addProduct(Products product) {
@@ -56,6 +59,18 @@ public class ProductServicesImpl implements ProductServices {
     }
 
     @Override
+    public ProductResponse2 deleteProductById(Long productId) {
+        Products product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product Not Found with ID: " + productId));
+
+        ProductResponse2 productResponse = mapper.map(product,ProductResponse2.class);
+
+        productRepository.deleteById(productId);
+
+        return productResponse;
+    }
+
+    @Override
     public List<Products> getProductsList() {
         return productRepository.findAll();
     }
@@ -65,5 +80,43 @@ public class ProductServicesImpl implements ProductServices {
         return productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product Not Found"));
     }
 
+    @Override
+    public List<ProductResponse2> getSortedProductsByName(){
+        List<Products> products = productRepository.findAll();
+        products.sort(Comparator.comparing(Products::getProductName).reversed());
+
+        List<ProductResponse2> productResponses = products.stream()
+                .map(p-> mapper.map(p,ProductResponse2.class)).toList();
+
+        return productResponses;
+    }
+
+    @Override
+    public List<ProductResponse2> getSortedProductsByPrice(){
+        List<Products> products = productRepository.findAll();
+        products.sort(Comparator.comparing(Products::getPrice));
+        List<ProductResponse2> productResponses = products.stream().map(p-> mapper.map(p,ProductResponse2.class)).toList();
+        return productResponses;
+    }
+
+    @Override
+    public List<ProductResponse2> filterGreater(BigDecimal price) {
+        List<Products> products = productRepository.findAll();
+        List<ProductResponse2> productResponse = products.stream()
+                .filter(p -> p.getPrice().compareTo(price) > 0)
+                .map(p -> mapper.map(p, ProductResponse2.class))
+                .toList();
+        return productResponse;
+    }
+
+    @Override
+    public List<ProductResponse2> filterSmaller(BigDecimal price) {
+        List<Products> products = productRepository.findAll();
+        List<ProductResponse2> productResponse = products.stream()
+                .filter(p -> p.getPrice().compareTo(price) < 0)
+                .map(p -> mapper.map(p, ProductResponse2.class))
+                .toList();
+        return productResponse;
+    }
 
 }
