@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -85,38 +84,36 @@ public class ProductServicesImpl implements ProductServices {
         List<Products> products = productRepository.findAll();
         products.sort(Comparator.comparing(Products::getProductName).reversed());
 
-        List<ProductResponse2> productResponses = products.stream()
-                .map(p-> mapper.map(p,ProductResponse2.class)).toList();
-
-        return productResponses;
+          return products.stream()
+                  .map(p-> mapper.map(p,ProductResponse2.class)).toList();
     }
 
     @Override
     public List<ProductResponse2> getSortedProductsByPrice(){
         List<Products> products = productRepository.findAll();
         products.sort(Comparator.comparing(Products::getPrice));
-        List<ProductResponse2> productResponses = products.stream().map(p-> mapper.map(p,ProductResponse2.class)).toList();
-        return productResponses;
+
+        return products.stream().map(p-> mapper.map(p,ProductResponse2.class)).toList();
     }
 
     @Override
     public List<ProductResponse2> filterGreater(BigDecimal price) {
         List<Products> products = productRepository.findAll();
-        List<ProductResponse2> productResponse = products.stream()
+
+        return products.stream()
                 .filter(p -> p.getPrice().compareTo(price) > 0)
                 .map(p -> mapper.map(p, ProductResponse2.class))
                 .toList();
-        return productResponse;
     }
 
     @Override
     public List<ProductResponse2> filterSmaller(BigDecimal price) {
         List<Products> products = productRepository.findAll();
-        List<ProductResponse2> productResponse = products.stream()
+
+        return products.stream()
                 .filter(p -> p.getPrice().compareTo(price) < 0)
                 .map(p -> mapper.map(p, ProductResponse2.class))
                 .toList();
-        return productResponse;
     }
 
 }
