@@ -116,4 +116,11 @@ public class ProductServicesImpl implements ProductServices {
                 .toList();
     }
 
+    @Override
+    public List<ProductResponse2> findTop5Products() {
+        List<Products> products = productRepository.top5Products();
+
+        return products.stream().map(m -> mapper.map(m,ProductResponse2.class)).toList();
+    }
+
 }

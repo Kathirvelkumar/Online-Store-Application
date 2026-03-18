@@ -30,4 +30,6 @@ public interface ProductServices {
     List<ProductResponse2> filterGreater(BigDecimal price);
 
     List<ProductResponse2> filterSmaller(BigDecimal price);
+
+    List<ProductResponse2> findTop5Products();
 }

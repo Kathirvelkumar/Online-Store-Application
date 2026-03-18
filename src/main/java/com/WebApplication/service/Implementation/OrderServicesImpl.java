@@ -1,9 +1,6 @@
 package com.WebApplication.service.Implementation;
 
-import com.WebApplication.dto.CustomerResponse;
-import com.WebApplication.dto.OrderItemResponse;
-import com.WebApplication.dto.OrderRequest;
-import com.WebApplication.dto.OrderResponse;
+import com.WebApplication.dto.*;
 import com.WebApplication.entity.Customers;
 import com.WebApplication.entity.OrderItems;
 import com.WebApplication.entity.Orders;
@@ -222,4 +219,11 @@ public class OrderServicesImpl implements OrderServices {
                 .map(o -> mapper.map(o, OrderResponse.class)).toList();
 
     }
+
+    @Override
+    public List<Orders> getLast7DaysOrders() {
+        LocalDateTime last7Days = LocalDateTime.now().minusDays(7);
+        return orderRepository.getOrdersLast7Days(last7Days);
+    }
+
 }

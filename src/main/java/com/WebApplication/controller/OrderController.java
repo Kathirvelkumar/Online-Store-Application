@@ -3,6 +3,7 @@ package com.WebApplication.controller;
 import com.WebApplication.dto.CustomerResponse;
 import com.WebApplication.dto.OrderRequest;
 import com.WebApplication.dto.OrderResponse;
+import com.WebApplication.entity.Orders;
 import com.WebApplication.service.OrderServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,6 +64,12 @@ public class OrderController {
     ResponseEntity<List<OrderResponse>> getTop5Orders(){
         List<OrderResponse> orderResponses = orderServices.getTop5Orders();
         return ResponseEntity.ok(orderResponses);
+    }
+
+    @GetMapping("/last7DaysOrders")
+    ResponseEntity<List<Orders>> last7DaysOrders(){
+        List<Orders> orders = orderServices.getLast7DaysOrders();
+        return ResponseEntity.ok(orders);
     }
 
 }

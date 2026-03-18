@@ -3,6 +3,7 @@ package com.WebApplication.controller;
 import com.WebApplication.dto.ProductResponse;
 import com.WebApplication.dto.ProductResponse2;
 import com.WebApplication.entity.Products;
+import com.WebApplication.service.OrderItemsServices;
 import com.WebApplication.service.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ public class ProductController {
 
     @Autowired
     private ProductServices productServices;
+
+    @Autowired
+    private OrderItemsServices orderItemsServices;
 
     // GET: Fetch all products
     @GetMapping()
@@ -89,6 +93,18 @@ public class ProductController {
     @PostMapping("/filter/Smaller")
     ResponseEntity<List<ProductResponse2>> filterSmaller(@RequestParam BigDecimal price){
         List<ProductResponse2> productResponse = productServices.filterSmaller(price);
+        return ResponseEntity.ok(productResponse);
+    }
+
+    @GetMapping("/top-5-products")
+    ResponseEntity<List<ProductResponse2>> findTop5Products(){
+        List<ProductResponse2> productResponse = productServices.findTop5Products();
+        return ResponseEntity.ok(productResponse);
+    }
+
+    @GetMapping("/top-3-sold-products")
+    ResponseEntity<List<ProductResponse2>> top3SoldProducts(){
+        List<ProductResponse2> productResponse = orderItemsServices.top3SoldProducts();
         return ResponseEntity.ok(productResponse);
     }
 

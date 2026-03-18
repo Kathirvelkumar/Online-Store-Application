@@ -3,6 +3,8 @@ package com.WebApplication.service;
 import com.WebApplication.dto.CustomerResponse;
 import com.WebApplication.dto.OrderRequest;
 import com.WebApplication.dto.OrderResponse;
+import com.WebApplication.entity.Orders;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -26,4 +28,6 @@ public interface OrderServices {
     Map<CustomerResponse, BigDecimal> totalRevenuePerCustomer();
 
     List<OrderResponse> getTop5Orders();
+
+    List<Orders> getLast7DaysOrders();
 }
