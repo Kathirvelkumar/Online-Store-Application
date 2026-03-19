@@ -1,7 +1,6 @@
 package com.WebApplication.service.Implementation;
 
 import com.WebApplication.dto.ProductResponse2;
-import com.WebApplication.entity.OrderItems;
 import com.WebApplication.entity.Products;
 import com.WebApplication.repository.OrderItemsRepository;
 import com.WebApplication.repository.ProductRepository;
@@ -19,7 +18,6 @@ public class OrderItemsServicesImpl implements OrderItemsServices {
     @Autowired
     private final OrderItemsRepository orderItemsRepository;
     private final ProductRepository productRepository;
-    private ModelMapper mapper;
 
 
     @Override
@@ -29,7 +27,7 @@ public class OrderItemsServicesImpl implements OrderItemsServices {
         return result.stream().map(obj -> {
 
             Long productId = ((Number) obj[0]).longValue();
-            Long totalSold = ((Number) obj[1]).longValue();
+//            Long totalSold = ((Number) obj[1]).longValue();
 
             Products product = productRepository.findById(productId)
                     .orElseThrow(() -> new RuntimeException("Product not found"));
