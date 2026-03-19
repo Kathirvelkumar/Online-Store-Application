@@ -5,6 +5,8 @@ import com.WebApplication.dto.CustomerResponse;
 import com.WebApplication.service.CustomerServices;
 import com.WebApplication.service.OrderServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,18 @@ public class CustomerController {
     ResponseEntity<List<CustomerResponse>> findAllCustomers(){
         List<CustomerResponse> customerResponse = customerServices.findAllCustomers();
         return ResponseEntity.status(200).body(customerResponse);
+    }
+
+//    @GetMapping
+//    public ResponseEntity<Page<CustomerResponse>> findAllCustomers(Pageable pageable){
+//        Page<CustomerResponse> customerResponse = customerServices.findAllCustomers(pageable);
+//        return ResponseEntity.ok(customerResponse);
+//    }
+
+    @GetMapping("/testPage")
+    public ResponseEntity<Page<CustomerResponse>> testPage(Pageable pageable){
+        Page<CustomerResponse> customerResponse = customerServices.testPage(pageable);
+        return ResponseEntity.ok(customerResponse);
     }
 
     @GetMapping("/{id}")

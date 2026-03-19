@@ -7,6 +7,8 @@ import com.WebApplication.repository.CustomerRepository;
 import com.WebApplication.service.CustomerServices;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -24,6 +26,21 @@ public class CustomerServicesImpl implements CustomerServices {
     public List<CustomerResponse> findAllCustomers() {
         List<Customers> customers = customerRepository.findAll();
         return customers.stream().map(customer -> mapper.map(customer, CustomerResponse.class)).toList();
+    }
+
+//    @Override
+//    public Page<CustomerResponse> findAllCustomers(Pageable pageable) {
+//        Page<Customers> customers = customerRepository.findAll(pageable);
+//
+//        return customers.map(customer ->
+//                mapper.map(customer, CustomerResponse.class)
+//        );
+//    }
+
+    @Override
+    public  Page<CustomerResponse> testPage(Pageable pageable){
+        Page<Customers> customers = customerRepository.findAll(pageable);
+        return customers.map(customer -> mapper.map(customer, CustomerResponse.class));
     }
 
     @Override
@@ -51,6 +68,5 @@ public class CustomerServicesImpl implements CustomerServices {
         return mapper.map(customer, CustomerResponse.class);
 
     }
-
 
 }
