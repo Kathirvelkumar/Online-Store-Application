@@ -10,14 +10,5 @@ public class WebApplication {
         SpringApplication.run(WebApplication.class, args);
     }
 
-//    @Bean
-//    CommandLineRunner initSeats(SeatRepository seatRepository) {
-//        return args -> {
-//            for (int i = 1; i <= 60; i++) {
-//                if (!seatRepository.existsById(i)) {
-//                    seatRepository.save(new Seats(i, false));
-//                }
-//            }
-//        };
-//    }
+
 }
